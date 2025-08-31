@@ -6,6 +6,7 @@
 - title: Installation
   su2gui:
   - Installation
+  - SU2-Installer
 
 - title: User Guide
   su2gui:
@@ -17,3 +18,5 @@
   - Logs-Errors
   - Result-Analysis
   - Supported-Functionalities
+  - Python-Wrapper
+  - Config-Validation

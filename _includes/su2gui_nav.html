@@ -1,19 +1,32 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 {% for section in site.data.su2gui %}
+  {% comment %}Determine if the current page is within this section to auto-expand{% endcomment %}
+  {% assign expanded = false %}
+  {% for i in section.su2gui %}
+    {% assign u = i | prepend:"/su2gui/" | append:"/" %}
+    {% if u == page.url %}
+      {% assign expanded = true %}
+    {% endif %}
+  {% endfor %}
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{forloop.index}}" aria-expanded="false" aria-controls="collapse-{{forloop.index}}">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{forloop.index}}" aria-expanded="{% if expanded %}true{% else %}false{% endif %}" aria-controls="collapse-{{forloop.index}}" class="{% unless expanded %}collapsed{% endunless %}">
           {{ section.title }}
         </a>
       </h4>
     </div>
-    <div id="collapse-{{forloop.index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+    <div id="collapse-{{forloop.index}}" class="panel-collapse collapse{% if expanded %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{forloop.index}}">
       <ul class="list-group">
         {% for item in section.su2gui %}
           {% assign item_url = item | prepend:"/su2gui/" | append:"/" %}
           {% assign p = site.su2gui | where:"url", item_url | first %}
-          <a class="list-group-item {% if item_url == page.url %}active{% endif %}" href="{{ p.url  | relative_url }}">{{ p.title }}</a>
+          {% if p %}
+            <a class="list-group-item {% if item_url == page.url %}active{% endif %}" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+          {% else %}
+            <span class="list-group-item disabled">{{ item }}</span>
+          {% endif %}
         {% endfor %}
       </ul>
     </div>

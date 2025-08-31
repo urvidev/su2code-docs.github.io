@@ -89,3 +89,17 @@ body {
 .navbar-form .has-feedback .form-control-feedback{
   top:10px
 }
+
+// Copy-to-clipboard button styles
+.code-block-wrapper {
+  position: relative;
+}
+.code-block-wrapper .copy-button {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  opacity: .85;
+}
+.code-block-wrapper .copy-button.copied {
+  opacity: 1;
+}
